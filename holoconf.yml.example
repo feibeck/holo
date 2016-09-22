@@ -1,0 +1,26 @@
+#
+# HOLO configuration file
+#
+
+middleware:
+  url: "https://example.org/volkszaehler/middleware.php"
+
+inverter:
+  hostname: "host"
+  username: "user"
+  password: "pass"
+  uuid_total: ""
+  uuid_current: ""
+
+ventilation:
+  hostname: "host"
+  password: "pass"
+  uuid_air_outside_incoming: ""
+  uuid_air_outside_outgoing: ""
+  uuid_air_inside_incoming: ""
+  uuid_air_inside_outgoing: ""
+  uuid_setting_level: ""
+  uuid_setting_percent: ""
+  uuid_revolution_speed_incoming: ""
+  uuid_revolution_speed_outgoing: ""
+  uuid_state_bypass: ""

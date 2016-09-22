@@ -1,0 +1,16 @@
+{
+    "name": "HOLO",
+    "description": "Read data from web based devices (e.g. inverter or ventilation) and sends it to volkszaehler.org",
+    "license": "THE BEER-WARE LICENSE",
+    "require": {
+        "symfony/console": "~3",
+        "symfony/event-dispatcher": "~3",
+        "symfony/config": "~3",
+        "symfony/yaml": "~3",
+        "fabpot/goutte": "~3.1",
+        "psr/log": "~1"
+    },
+    "autoload": {
+        "psr-4": {"Holo\\": "Holo/"}
+    }
+}
