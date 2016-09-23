@@ -112,7 +112,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('uuid_air_outside_incoming')->end()
                 ->scalarNode('uuid_air_outside_outgoing')->end()
                 ->scalarNode('uuid_air_inside_incoming')->end()
-                ->scalarNode('uuid_air_inside_outgoung')->end()
+                ->scalarNode('uuid_air_inside_outgoing')->end()
                 ->scalarNode('uuid_setting_level')->end()
                 ->scalarNode('uuid_setting_percent')->end()
                 ->scalarNode('uuid_revolution_speed_incoming')->end()
