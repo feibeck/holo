@@ -14,8 +14,8 @@
 namespace Holo;
 
 use Holo\Command\Configurable;
-use Holo\Command\InverterCommand;
-use Holo\Command\VentilationCommand;
+use Holo\Command\InverterDataCommand;
+use Holo\Command\VentilationDataCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
@@ -51,8 +51,8 @@ class Application extends SymfonyConsoleApplication
         $dispatcher->addListener(ConsoleEvents::COMMAND, array($this, 'configureCommand'));
         $this->setDispatcher($dispatcher);
 
-        $this->add(new InverterCommand());
-        $this->add(new VentilationCommand());
+        $this->add(new InverterDataCommand());
+        $this->add(new VentilationDataCommand());
     }
 
     /**

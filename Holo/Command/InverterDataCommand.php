@@ -20,7 +20,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Command to fetch data from an inverter
  */
-class InverterCommand extends HoloCommand
+class InverterDataCommand extends HoloCommand
 {
 
     /**

@@ -20,7 +20,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Command to fetch data from a ventilation system
  */
-class VentilationCommand extends HoloCommand
+class VentilationDataCommand extends HoloCommand
 {
     /**
      * @var string
