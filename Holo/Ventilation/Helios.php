@@ -32,6 +32,11 @@ class Helios
     private $password;
 
     /**
+     * @var Client
+     */
+    private $httpClient;
+
+    /**
      * Helios constructor.
      *
      * @param string $hostname
@@ -41,6 +46,8 @@ class Helios
     {
         $this->hostname = $hostname;
         $this->password = $password;
+
+        $this->httpClient = new Client();
     }
 
     /**
@@ -48,27 +55,9 @@ class Helios
      */
     public function fetch()
     {
-        $httpClient = new Client();
+        $this->login();
 
-        $httpClient->request(
-            'POST',
-            sprintf('http://%s/info.htm', $this->hostname),
-            [],
-            [],
-            [],
-            sprintf('v00402=%s', $this->password)
-        );
-
-        $crawler = $httpClient->request(
-            'POST',
-            sprintf('http://%s/data/werte8.xml', $this->hostname),
-            [],
-            [],
-            [],
-            'xml=/data/werte8.xml'
-        );
-
-        $xml = $crawler->html();
+        $xml = $this->fetchXml(8);
 
         $result = new VentilationResult();
         $result->airTemperatureOutsideIncoming = $this->readValue('v00104', $xml);
@@ -85,6 +74,39 @@ class Helios
     }
 
     /**
+     * @return VentilationStatus
+     */
+    public function fetchStatus()
+    {
+        $this->login();
+
+        $xml = $this->fetchXml(16);
+
+        return new VentilationStatus(
+            $this->readValue('v01303', $xml),
+            $this->readValue('v01304', $xml),
+            $this->readValue('v01305', $xml)
+        );
+    }
+
+    /**
+     * Reset any errors to restart ventilation
+     */
+    public function resetErrors()
+    {
+        $this->login();
+
+        $this->httpClient->request(
+            'POST',
+            sprintf('http://%s/fehl.htm', $this->hostname),
+            [],
+            [],
+            [],
+            'v01300=0&v01303=00000000000000000000000000000000&v01301=0&v01304=00000000&v01302=0&v01305=00000000&v02104=1&v01120=1&v02105=1'
+        );
+    }
+
+    /**
      * @param string $id
      * @param string $xml
      *
@@ -96,6 +118,37 @@ class Helios
         $matches = [];
         preg_match($regex, $xml, $matches);
         return $matches[1];
+    }
+
+    private function login()
+    {
+        $this->httpClient->request(
+            'POST',
+            sprintf('http://%s/info.htm', $this->hostname),
+            [],
+            [],
+            [],
+            sprintf('v00402=%s', $this->password)
+        );
+    }
+
+    /**
+     * @return string
+     */
+    private function fetchXml($pageNumber)
+    {
+        $path = sprintf('/data/werte%s.xml', $pageNumber);
+
+        $crawler = $this->httpClient->request(
+            'POST',
+            sprintf('http://%s' . $path, $this->hostname),
+            [],
+            [],
+            [],
+            'xml=' . $path
+        );
+
+        return $crawler->html();
     }
 
 }

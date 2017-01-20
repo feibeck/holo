@@ -16,6 +16,7 @@ namespace Holo;
 use Holo\Command\Configurable;
 use Holo\Command\InverterDataCommand;
 use Holo\Command\VentilationDataCommand;
+use Holo\Command\VentilationErrorResetCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
@@ -53,6 +54,7 @@ class Application extends SymfonyConsoleApplication
 
         $this->add(new InverterDataCommand());
         $this->add(new VentilationDataCommand());
+        $this->add(new VentilationErrorResetCommand());
     }
 
     /**
